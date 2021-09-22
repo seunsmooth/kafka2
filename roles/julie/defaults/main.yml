@@ -1,0 +1,18 @@
+---
+
+decriptor_repo: 'https://github.com/seunsmooth/kafka_demo.git'
+
+decriptor_path: "/tmp/"
+descriptor_branch: main
+
+kafka_topology_builder: 
+   topology_path: "/home/seunsmooth/play/kafka_demo/packages/julie-2.1.2/"
+   topology_file: "/tmp/descriptor.yaml"
+   config_file: "/tmp/kafka_config.conf"
+
+
+brokers_list: "192.168.118.52:9092"
+repo_git:  "https://github.com/kafka-ops/julie/archive/refs/tags/v2.1.2.tar.gz"
+repo_dir:  "/home/seunsmooth/play/kafka_demo/packages"
+
+packers_dir: "/home/seunsmooth/play/kafka_demo/packages"

@@ -1,0 +1,47 @@
+---
+# tasks file for kafka
+- name: create common dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    
+  with_items:
+    - "{{ packers_dir }}"
+
+- name: Download Julie topology builder 
+  get_url:
+    url:  https://github.com/kafka-ops/julie/archive/refs/tags/v2.1.2.tar.gz
+    dest: /home/seunsmooth/play/kafka_demo/packages
+
+    mode: '700'
+    
+- name: Extract Julie topology jar file
+  ansible.builtin.unarchive: 
+     src: /home/seunsmooth/play/kafka_demo/packages/julie-2.1.2.tar.gz
+     dest: /home/seunsmooth/play/kafka_demo/packages
+     remote_src: yes
+    
+
+- name: Build Kafka-bulder-topology
+  shell: sh install-local-jar.sh
+  args:
+    chdir: /home/seunsmooth/play/kafka_demo/packages/julie-2.1.2/
+    
+ 
+- name: Run the Kafka Topology Builder
+  ansible.builtin.command:
+    argv:
+      -  java -jar julie-ops.jar
+      -    --brokers {{ brokers_list }} 
+      -    --clientConfig {{ kafka_topology_builder.topology_path }}{{ kafka_topology_builder.config_file }}
+      -    --topology {{ kafka_topology_builder.topology_path }}{{ kafka_topology_builder.topology_file }}
+  args: 
+    chdir: /home/seunsmooth/play/kafka_demo/packages/julie-2.1.2/target/
+  
+  
+
+  
+  
+  
+  
+  
